@@ -1,0 +1,43 @@
+import request from '../util/request'
+
+export function GetAllRooms() {
+  return request({
+    url: '/mm/api/v1/room/room',
+    method: 'get'
+  })
+}
+
+export function DeleteRoom(roomName) {
+  return request({
+    url: '/mm/api/v1/room/room/' + roomName,
+    method: 'delete'
+  })
+}
+
+export function UpdateRoom(roomName, roomLocation, roomPeople, roomRemarks) {
+  const data = {
+    'roomName': roomName,
+    'roomLocation': roomLocation,
+    'roomPeople': roomPeople,
+    'roomRemarks': roomRemarks
+  };
+  return request({
+    url: '/mm/api/v1/room/room',
+    method: 'put',
+    data
+  })
+}
+
+export function AddRoom(roomName, roomLocation, roomPeople, roomRemarks) {
+  const data = {
+    'roomName': roomName,
+    'roomLocation': roomLocation,
+    'roomPeople': roomPeople,
+    'roomRemarks': roomRemarks
+  };
+  return request({
+    url: '/mm/api/v1/room/room',
+    method: 'post',
+    data
+  })
+}
