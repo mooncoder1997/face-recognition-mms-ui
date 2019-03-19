@@ -1,11 +1,12 @@
 <template>
   <div>
     <div class="query-c">
-      查询：
-      <Input search placeholder="请输入查询内容" style="width: auto"/>
+      查询指定会议室：
+      <Input search @on-search="getRoomByRoomName" v-model="searchRoomName" placeholder="请输入会议室名称" style="width: auto"/>
       <Button type="primary" icon="ios-add-circle-outline" @click="isAddRoom = true">添加会议室</Button>
     </div>
     <br>
+
     <Table border stripe :columns="columns" :data="data" :loading="loading" ref="roomTable">
       <template slot-scope="{ row, index }" slot="roomName">
         <Input type="text" v-model="editRoomName" v-if="editIndex === index"/>
@@ -60,7 +61,7 @@
       </template>
     </Table>
     <br>
-    <Button type="primary" size="large" @click="exportData">
+    <Button type="primary" @click="exportData">
       <Icon type="ios-download-outline"></Icon>
       导出数据
     </Button>
@@ -68,10 +69,14 @@
     <Modal v-model="isAddRoom" title="添加新的会议室" @on-ok="addRoom" @on-cancel="cancel">
       <Form ref="addRoomForm" :model="formValidate" :rules="ruleValidate" :label-width="90">
         <FormItem label="会议室名称: " prop="roomName">
-          <Input v-model="formValidate.roomName" placeholder="请输入会议室名称..."></Input>
+          <Input v-model="formValidate.roomName" placeholder="请输入会议室名称...">
+            <Icon type="ios-easel-outline" slot="prepend"></Icon>
+          </Input>
         </FormItem>
         <FormItem label="会议室位置: " prop="roomLocation">
-          <Input v-model="formValidate.roomLocation" placeholder="请输入会议室位置..."></Input>
+          <Input v-model="formValidate.roomLocation" placeholder="请输入会议室位置...">
+            <Icon type="ios-navigate-outline" slot="prepend"></Icon>
+          </Input>
         </FormItem>
         <FormItem label="最大容纳人数: " prop="roomPeople">
           <Slider v-model="maxPeople" show-input></Slider>
@@ -85,7 +90,7 @@
 </template>
 
 <script>
-  import {GetAllRooms, DeleteRoom, UpdateRoom, AddRoom} from "../../../api/room";
+  import {GetRoomByRoomName, GetAllRooms, DeleteRoom, UpdateRoom, AddRoom} from "../../../api/room";
 
   export default {
     name: 'RoomManage',
@@ -93,6 +98,7 @@
       return {
         loading: true,
         isAddRoom: false,
+        searchRoomName: '',
         maxPeople: 10,
         columns: [
           {
@@ -194,7 +200,8 @@
         editRoomRemarks: '',
         formValidate: {
           roomName: '',
-          roomLocation: ''
+          roomLocation: '',
+          roomRemarks: ''
         },
         ruleValidate: {
           roomName: [
@@ -207,6 +214,26 @@
       }
     },
     methods: {
+      getRoomByRoomName(searchRoomName) {
+        if (searchRoomName) {
+          return new Promise((resolve, reject) => {
+            GetRoomByRoomName(searchRoomName).then(response => {
+              response = response.data;
+              if (response.code === 200) {
+                let data = [];
+                data.push(response.data);
+                this.data = data;
+                this.$Message.success(response.message);
+              } else {
+                this.data = [];
+                this.$Message.error(response.message);
+              }
+            })
+          })
+        } else {
+          this.getAllRooms();
+        }
+      },
       getAllRooms() {
         return new Promise((resolve, reject) => {
           GetAllRooms().then(response => {
@@ -249,11 +276,15 @@
       },
       addRoom() {
         return new Promise(((resolve, reject) => {
-          console.log(this.$refs.addRoomForm.model.roomRemarks);
           AddRoom(this.$refs.addRoomForm.model.roomName, this.$refs.addRoomForm.model.roomLocation, this.maxPeople, this.$refs.addRoomForm.model.roomRemarks).then(response => {
             response = response.data;
             if (response.code === 201) {
               this.$Message.success(response.message);
+              this.data.push({
+                roomName: this.$refs.addRoomForm.model.roomName,
+                roomLocation: this.$refs.addRoomForm.model.roomLocation,
+                roomPeople: this.maxPeople,
+                roomRemarks: this.$refs.addRoomForm.model.roomRemarks})
             } else {
               this.$Message.error(response.message);
             }

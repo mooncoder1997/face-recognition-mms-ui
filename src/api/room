@@ -1,5 +1,12 @@
 import request from '../util/request'
 
+export function GetRoomByRoomName(roomName) {
+  return request({
+    url: '/mm/api/v1/room/room/' + roomName,
+    method: 'get'
+  })
+}
+
 export function GetAllRooms() {
   return request({
     url: '/mm/api/v1/room/room',

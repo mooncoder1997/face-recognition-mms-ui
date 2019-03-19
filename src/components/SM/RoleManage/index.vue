@@ -1,13 +1,6 @@
 <template>
   <div>
-    <div class="query-c">
-      查询：
-      <Input search placeholder="请输入查询内容" style="width: auto"/>
-    </div>
-    <br>
     <Table border stripe :columns="columns" :data="data" :loading="loading"></Table>
-    <br>
-    <Page :total="100" show-sizer show-elevator/>
   </div>
 </template>
 
