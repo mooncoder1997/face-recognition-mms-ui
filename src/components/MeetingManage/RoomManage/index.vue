@@ -2,7 +2,7 @@
   <div>
     <div class="query-c">
       查询指定会议室：
-      <Input search @on-search="getRoomByRoomName" v-model="searchRoomName" placeholder="请输入会议室名称" style="width: auto"/>
+      <Input search @on-search="queryRoomByRoomName" v-model="searchRoomName" placeholder="请输入会议室名称" style="width: auto"/>
       <Button type="primary" icon="ios-add-circle-outline" @click="isAddRoom = true">添加会议室</Button>
     </div>
     <br>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-  import {GetRoomByRoomName, GetAllRooms, DeleteRoom, UpdateRoom, AddRoom} from "../../../api/room";
+  import {QueryRoomByRoomName, QueryAllRoom, DeleteRoomByRoomName, UpdateRoom, AddRoom} from "../../../api/room";
 
   export default {
     name: 'RoomManage',
@@ -214,36 +214,34 @@
       }
     },
     methods: {
-      getRoomByRoomName(searchRoomName) {
+      queryRoomByRoomName(searchRoomName) {
         if (searchRoomName) {
           return new Promise((resolve, reject) => {
-            GetRoomByRoomName(searchRoomName).then(response => {
-              response = response.data;
-              if (response.code === 200) {
+            QueryRoomByRoomName(searchRoomName).then(response => {
+              if (response.status === 200) {
                 let data = [];
                 data.push(response.data);
                 this.data = data;
-                this.$Message.success(response.message);
+                this.$Message.success("查询会议室成功！");
               } else {
                 this.data = [];
-                this.$Message.error(response.message);
+                this.$Message.error("查询会议室失败！");
               }
             })
           })
         } else {
-          this.getAllRooms();
+          this.queryAllRoom();
         }
       },
-      getAllRooms() {
+      queryAllRoom() {
         return new Promise((resolve, reject) => {
-          GetAllRooms().then(response => {
-            response = response.data;
-            if (response.code === 200) {
-              this.$Message.success(response.message);
+          QueryAllRoom().then(response => {
+            if (response.status === 200) {
+              this.$Message.success("查询所有会议室成功！");
               this.data = response.data;
               this.loading = false;
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("查询所有会议室失败！");
             }
           })
         }).catch(error => {
@@ -253,23 +251,21 @@
       updateRoom(roomName, roomLocation, roomPeoplem, roomRemarks) {
         return new Promise(((resolve, reject) => {
           UpdateRoom(roomName, roomLocation, roomPeoplem, roomRemarks).then(response => {
-            response = response.data;
-            if (response.code === 201) {
-              this.$Message.success(response.message);
+            if (response.status === 201) {
+              this.$Message.success("更新会议室成功！");
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("更新会议室失败");
             }
           })
         }))
       },
-      deleteRoom(roomName) {
+      deleteRoomByRoomName(roomName) {
         return new Promise((resolve, reject) => {
-          DeleteRoom(roomName).then(response => {
-            response = response.data;
-            if (response.code === 204) {
-              this.$Message.success(response.message);
+          DeleteRoomByRoomName(roomName).then(response => {
+            if (response.status === 204) {
+              this.$Message.success("删除会议室成功！");
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("删除会议室失败！");
             }
           })
         })
@@ -277,22 +273,22 @@
       addRoom() {
         return new Promise(((resolve, reject) => {
           AddRoom(this.$refs.addRoomForm.model.roomName, this.$refs.addRoomForm.model.roomLocation, this.maxPeople, this.$refs.addRoomForm.model.roomRemarks).then(response => {
-            response = response.data;
-            if (response.code === 201) {
-              this.$Message.success(response.message);
+            if (response.status === 201) {
+              this.$Message.success("添加会议室成功！");
               this.data.push({
                 roomName: this.$refs.addRoomForm.model.roomName,
                 roomLocation: this.$refs.addRoomForm.model.roomLocation,
                 roomPeople: this.maxPeople,
                 roomRemarks: this.$refs.addRoomForm.model.roomRemarks})
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("添加会议室失败！");
             }
           })
         }))
       },
+
       handleDelete(row, index) {
-        this.deleteRoom(row.roomName);
+        this.deleteRoomByRoomName(row.roomName);
         this.data.splice(index, 1);
       },
       handleCancel() {
@@ -321,7 +317,7 @@
       }
     },
     mounted() {
-      this.getAllRooms();
+      this.queryAllRoom();
     }
   }
 </script>

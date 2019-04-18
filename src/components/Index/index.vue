@@ -71,8 +71,8 @@
               <DropdownMenu slot="list">
                 <!-- name标识符 -->
                 <DropdownItem name="1">修改密码</DropdownItem>
-                <DropdownItem name="2">基本资料</DropdownItem>
-                <DropdownItem divided name="3"><b>退出登陆</b></DropdownItem>
+                <!--<DropdownItem name="2">基本资料</DropdownItem>-->
+                <DropdownItem divided name="3"><b>退出登录</b></DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -144,10 +144,22 @@
             text: '会议管理',
             children: [
               {
-                name: 'MeetingBook',
+                name: 'BookMeeting',
                 size: 20,
                 type: 'md-calendar',
                 text: '会议预定'
+              },
+              {
+                name: 'MeetingManage',
+                size: 20,
+                type: 'ios-at',
+                text: '已预定会议'
+              },
+              {
+                name: 'RoomManage',
+                size: 20,
+                type: 'md-easel',
+                text: '会议室管理'
               }
             ]
           },
@@ -180,44 +192,31 @@
                 size: 20,
                 type: 'md-contacts',
                 text: '角色管理'
-              },
-              {
-                name: "RoomManage",
-                size: 20,
-                type: 'md-easel',
-                text: '会议室管理'
               }
             ]
           },
           {
-            text: '二级菜单',
+            size: 20,
             type: 'ios-paper',
+            text: '个人信息',
             children: [
               {
-                type: 'ios-grid',
-                name: 'T1',
-                text: '表格'
+                size: 20,
+                type: 'md-lock',
+                name: 'ChangePassword',
+                text: '修改密码'
               },
               {
-                text: '三级菜单',
-                type: 'ios-paper',
-                children: [
-                  {
-                    type: 'ios-notifications-outline',
-                    name: 'Msg',
-                    text: '查看消息'
-                  },
-                  {
-                    type: 'md-lock',
-                    name: 'Password',
-                    text: '修改密码'
-                  },
-                  {
-                    type: 'md-person',
-                    name: 'UserInfo',
-                    text: '基本资料',
-                  }
-                ]
+                size: 20,
+                type: 'ios-notifications-outline',
+                name: 'Msg',
+                text: '查看消息'
+              },
+              {
+                size: 20,
+                type: 'md-person',
+                name: 'UserInfo',
+                text: '基本资料',
               }
             ]
           }
@@ -327,25 +326,25 @@
         switch (name) {
           case '1':
             // 修改密码
-            this.gotoPage('Password')
-            break
+            this.gotoPage('ChangePassword');
+            break;
           case '2':
             // 基本资料
-            this.gotoPage('UserInfo')
-            break
+            this.gotoPage('UserInfo');
+            break;
           case '3':
-            // 退出登陆 清除用户资料
+            // 退出登录 清除用户资料
             this.$store.commit('setUser', {
               name: '',
               img: ''
-            })
-            this.$router.replace({name: 'Login'})
+            });
+            this.$router.replace({name: 'Login'});
             break
         }
       },
       // 控制用户三角箭头显示状态
       showArrow(flag) {
-        this.arrowUp = flag
+        this.arrowUp = flag;
         this.arrowDown = !flag
       },
       // 判断
@@ -356,30 +355,30 @@
       shrinkAside() {
         this.asideArrowIcons.forEach(e => {
           e.style.display = 'none'
-        })
-        this.isShowAsideTitle = false
-        this.openMenus = []
+        });
+        this.isShowAsideTitle = false;
+        this.openMenus = [];
         this.$nextTick(() => {
           this.$refs.asideMenu.updateOpened()
-        })
+        });
         setTimeout(() => {
-          this.asideClassName = 'aside-display-none'
+          this.asideClassName = 'aside-display-none';
           this.main.style.width = '100%'
         }, 0)
       },
       // 展开
       expandAside() {
         setTimeout(() => {
-          this.isShowAsideTitle = true
+          this.isShowAsideTitle = true;
           this.asideArrowIcons.forEach(e => {
             e.style.display = 'block'
-          })
-          this.openMenus = this.menuCache
+          });
+          this.openMenus = this.menuCache;
           this.$nextTick(() => {
             this.$refs.asideMenu.updateOpened()
           })
-        }, 200)
-        this.asideClassName = 'aside-big'
+        }, 200);
+        this.asideClassName = 'aside-big';
         this.main.style.width = '100%'
       },
       // 刷新当前标签页

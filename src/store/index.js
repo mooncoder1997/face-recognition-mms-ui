@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import account from "./modules/Account";
-import setting from "./modules/Setting";
 
 Vue.use(Vuex);
 
@@ -13,12 +11,6 @@ export default new Vuex.Store({
       userGender: localStorage.getItem('userGender'),
       userEmail: localStorage.getItem('userEmail'),
       userRoleName: localStorage.getItem('userRoleName'),
-    },
-    videoObject: "",
-    videoCanvasObject: "",
-    videoCanvasRunTime: {
-      time: 23,
-      fps: 8
     }
   },
   mutations: {
@@ -29,20 +21,7 @@ export default new Vuex.Store({
       state.user.userEmail = localStorage.setItem('userEmail', obj.userEmail);
       state.user.userRoleName = localStorage.setItem('userRoleName', obj.userRoleName)
       state.user = {...obj};
-    },
-    setVideoObject(state, stream) {
-      state.videoObject = stream;
-    },
-    setVideoCanvasObject(state, stream) {
-      state.videoCanvasObject = stream;
-    },
-    setVideoCanvasRunTime(state, data) {
-      state.videoCanvasRunTime = data;
     }
   },
-  actions: {},
-  modules: {
-    account,
-    setting
-  }
+  actions: {}
 })

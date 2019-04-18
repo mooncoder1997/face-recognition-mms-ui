@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { GetAllRoles } from "../../../api/role";
+  import { QueryAllRole } from "../../../api/role";
 
   export default {
     name: "RoleManage",
@@ -24,17 +24,16 @@
       }
     },
     methods: {
-      getAllRoles() {
+      queryAllRole() {
         return new Promise((resolve, reject) => {
-          GetAllRoles().then(response => {
-            response = response.data;
-            if (response.code === 200) {
+          QueryAllRole().then(response => {
+            if (response.status === 200) {
               this.$Message.success("获取所有角色成功!");
               console.log(response.data);
               response.data.forEach((item) => {
                 console.log(item);
                 // this.role.roleName = item;
-                var role = {
+                let role = {
                   roleName: item
                 };
                 this.data.push(role);
@@ -50,7 +49,7 @@
       }
     },
     mounted() {
-      this.getAllRoles();
+      this.queryAllRole();
     }
   }
 </script>

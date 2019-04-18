@@ -1,8 +1,8 @@
 import request from '../util/request'
 
-export function GetAllRoles() {
+export function QueryAllRole() {
   return request({
-    url: '/sm/api/v1/role/role',
+    url: '/mms-provider-user/api/v1/roles',
     method: 'get'
   })
 }

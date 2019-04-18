@@ -3,16 +3,18 @@ import Router from 'vue-router'
 
 Vue.use(Router);
 
-const Login = () => import('@/components/Login');
+const Login = () => import('@/components/Login/NormalLogin');
+const FaceLogin = () => import('@/components/Login/FaceLogin');
 const Index = () => import('@/components/Index');
-
 const Home = () => import('@/components/Home');
-const UserManage = () => import('@/components/SM/UserManage');
-const RoleManage = () => import('@/components/SM/RoleManage');
-const RoomManage = () => import('@/components/SM/RoomManage');
-const AddFace = () => import('@/components/FM/AddFace');
+const BookMeeting = () => import('@/components/MeetingManage/BookMeeting');
+const MeetingManage = () => import('@/components/MeetingManage/MeetingManage');
+const UserManage = () => import('@/components/SystemManage/UserManage');
+const RoleManage = () => import('@/components/SystemManage/RoleManage');
+const RoomManage = () => import('@/components/MeetingManage/RoomManage');
+const AddFace = () => import('@/components/FaceManage/AddFace');
+const ChangePassword = () => import('@/components/UserInfo/ChangePassword');
 const T1 = () => import('@/components/T1');
-const Password = () => import('@/components/Password');
 const Msg = () => import('@/components/Msg');
 const UserInfo = () => import('@/components/UserInfo');
 
@@ -22,6 +24,16 @@ const children = [
     path: '',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/meeting/book',
+    name: 'BookMeeting',
+    component: BookMeeting
+  },
+  {
+    path: '/meeting',
+    name: 'MeetingManage',
+    component: MeetingManage
   },
   {
     path: '/user',
@@ -50,8 +62,8 @@ const children = [
   },
   {
     path: 'password',
-    name: 'Password',
-    component: Password
+    name: 'ChangePassword',
+    component: ChangePassword
   },
   {
     path: 'msg',
@@ -76,6 +88,12 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+
+    {
+      path: '/faceLogin',
+      name: 'FaceLogin',
+      component: FaceLogin
     },
 
     {

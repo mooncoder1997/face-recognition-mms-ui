@@ -1,22 +1,22 @@
 import request from '../util/request'
 
-export function GetRoomByRoomName(roomName) {
+export function QueryRoomByRoomName(roomName) {
   return request({
-    url: '/mm/api/v1/room/room/' + roomName,
+    url: '/mms-provider-meeting/api/v1/rooms/' + roomName,
     method: 'get'
   })
 }
 
-export function GetAllRooms() {
+export function QueryAllRoom() {
   return request({
-    url: '/mm/api/v1/room/room',
+    url: '/mms-provider-meeting/api/v1/rooms',
     method: 'get'
   })
 }
 
-export function DeleteRoom(roomName) {
+export function DeleteRoomByRoomName(roomName) {
   return request({
-    url: '/mm/api/v1/room/room/' + roomName,
+    url: '/mms-provider-meeting/api/v1/rooms/' + roomName,
     method: 'delete'
   })
 }
@@ -29,7 +29,7 @@ export function UpdateRoom(roomName, roomLocation, roomPeople, roomRemarks) {
     'roomRemarks': roomRemarks
   };
   return request({
-    url: '/mm/api/v1/room/room',
+    url: '/mms-provider-meeting/api/v1/room',
     method: 'put',
     data
   })
@@ -43,7 +43,7 @@ export function AddRoom(roomName, roomLocation, roomPeople, roomRemarks) {
     'roomRemarks': roomRemarks
   };
   return request({
-    url: '/mm/api/v1/room/room',
+    url: '/mms-provider-meeting/api/v1/room',
     method: 'post',
     data
   })

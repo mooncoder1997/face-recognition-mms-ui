@@ -2,7 +2,7 @@
   <div>
     <div class="query-c">
       查询指定用户：
-      <Input search @on-search="getUserByUserId" v-model="searchUserId" placeholder="请输入用户编号" style="width: auto"/>
+      <Input search @on-search="queryUserByUserId" v-model="searchUserId" placeholder="请输入用户编号" style="width: auto"/>
       <Button type="primary" icon="ios-add-circle-outline" @click="isAddUser = true">添加用户</Button>
     </div>
     <br>
@@ -23,7 +23,6 @@
           <Option value="男">男</Option>
           <Option value="女">女</Option>
         </Select>
-        <!--<Input type="text" v-model="editUserGender" v-if="editIndex === index"/>-->
         <span v-else>{{ row.userGender }}</span>
       </template>
 
@@ -149,7 +148,7 @@
 </template>
 
 <script>
-  import {GetUserByUserId, GetAllUsers, UpdateRoom, DeleteUser, AddUser} from "../../../api/user";
+  import {QueryUserByUserId, QueryAllUser, UpdateUser, DeleteUserByUserId, AddUser} from "../../../api/user";
 
   export default {
     name: 'UserManage',
@@ -305,37 +304,34 @@
       }
     },
     methods: {
-      getUserByUserId(searchUserId) {
+      queryUserByUserId(searchUserId) {
         if (searchUserId) {
           return new Promise((resolve, reject) => {
-            GetUserByUserId(searchUserId).then(response => {
-              response = response.data;
-              if (response.code === 200) {
+            QueryUserByUserId(searchUserId).then(response => {
+              if (response.status === 200) {
                 let data = [];
                 data.push(response.data);
                 this.data = data;
-                this.$Message.success(response.message);
+                this.$Message.success("查询用户成功！");
               } else {
                 this.data = [];
-                this.$Message.error(response.message);
+                this.$Message.error("查询用户失败！");
               }
             })
           })
         } else {
-          this.getAllUsers();
+          this.queryAllUser();
         }
       },
-      getAllUsers() {
+      queryAllUser() {
         return new Promise((resolve, reject) => {
-          GetAllUsers().then(response => {
-            response = response.data;
-            if (response.code === 200) {
+          QueryAllUser().then(response => {
+            if (response.status === 200) {
               this.$Message.success("获取所有用户成功!");
-              console.log(response.data);
               this.data = response.data;
               this.loading = false;
             } else {
-              this.$Message.success(response.message);
+              this.$Message.success("获取所有用户失败!");
             }
           })
         }).catch(error => {
@@ -344,24 +340,22 @@
       },
       updateUser(userId, userName, userGender, userEmail, userMobile, userRoleName, userRemarks) {
         return new Promise(((resolve, reject) => {
-          UpdateRoom(userId, userName, userGender, userEmail, userMobile, userRoleName, userRemarks).then(response => {
-            response = response.data;
-            if (response.code === 201) {
-              this.$Message.success(response.message);
+          UpdateUser(userId, userName, userGender, userEmail, userMobile, userRoleName, userRemarks).then(response => {
+            if (response.status === 201) {
+              this.$Message.success("更新用户成功!");
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("更新用户失败!");
             }
           })
         }))
       },
-      deleteUser(userId) {
+      deleteUserByUserId(userId) {
         return new Promise((resolve, reject) => {
-          DeleteUser(userId).then(response => {
-            response = response.data;
-            if (response.code === 204) {
-              this.$Message.success(response.message);
+          DeleteUserByUserId(userId).then(response => {
+            if (response.status === 204) {
+              this.$Message.success("删除用户成功!");
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("删除用户失败!");
             }
           })
         })
@@ -376,9 +370,8 @@
             this.$refs.addUserForm.model.userMobile,
             this.$refs.addUserForm.model.userRoleName,
             this.$refs.addUserForm.model.userRemarks).then(response => {
-            response = response.data;
-            if (response.code === 201) {
-              this.$Message.success(response.message);
+            if (response.status === 201) {
+              this.$Message.success("添加用户成功!");
               this.data.push({
                 userId: this.$refs.addUserForm.model.userId,
                 userName: this.$refs.addUserForm.model.userName,
@@ -389,13 +382,14 @@
                 userRemarks: this.$refs.addUserForm.model.userRemarks
               })
             } else {
-              this.$Message.error(response.message);
+              this.$Message.error("添加用户失败！");
             }
           })
         }))
       },
+
       handleDelete(row, index) {
-        this.deleteUser(row.userId);
+        this.deleteUserByUserId(row.userId);
         this.data.splice(index, 1);
       },
       handleCancel() {
@@ -432,7 +426,7 @@
       }
     },
     mounted() {
-      this.getAllUsers();
+      this.queryAllUser();
     }
   }
 </script>

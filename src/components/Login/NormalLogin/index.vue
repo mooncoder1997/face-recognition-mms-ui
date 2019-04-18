@@ -10,14 +10,15 @@
         <Input type="password" v-model="password" prefix="md-lock" placeholder="密码" clearable @on-blur="verifyPassword"/>
         <p class="error">{{passwordError}}</p>
       </div>
-      <Button :loading="isShowLoading" class="submit" type="primary" @click="loginByUsername">登陆</Button>
-      <p class="account"><span @click="register">注册账号</span> | <span @click="forgetPwd">忘记密码</span></p>
+      <Button :loading="isShowLoading" class="submit" type="primary" @click="loginByUserNameAndPassWord">登录</Button>
+      <Button class="account" type="primary" shape="circle"><span @click="faceLogin">刷脸登录</span></Button>
+      <!--<p class="account"><span @click="register">注册账号</span> | <span @click="forgetPwd">忘记密码</span></p>-->
     </div>
   </div>
 </template>
 
 <script>
-  import {LoginByUserName} from "../../api/login";
+  import {LoginByUserNameAndPassWord} from "../../../api/login";
 
   export default {
     name: 'Login',
@@ -29,7 +30,7 @@
         passwordError: '',
         isShowLoading: false,
         bg: {
-          backgroundImage: 'url(' + require('../../assets/bg04.jpg'),
+          backgroundImage: 'url(' + require('../../../assets/bg04.jpg'),
           backgroundPosition: 'center center',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
@@ -38,9 +39,8 @@
     },
     mounted() {
       document.onkeydown = e => {
-        // 监听回车事件
         if (e.keyCode == 13) {
-          this.loginByUsername()
+          this.loginByUserNameAndPassWord()
         }
       }
     },
@@ -59,23 +59,24 @@
           this.passwordError = ''
         }
       },
-      register() {
-        this.$Message.warning("注册功能尚未开放");
+      // register() {
+      //   this.$Message.warning("注册功能尚未开放");
+      // },
+      // forgetPwd() {
+      //   this.$Message.warning("忘记密码功能尚未开放");
+      // },
+      faceLogin() {
+        this.$router.replace({name: 'FaceLogin'});
       },
-      forgetPwd() {
-        this.$Message.warning("忘记密码功能尚未开放");
-      },
-      loginByUsername() {
+      loginByUserNameAndPassWord() {
         if (this.username !== '' && this.password !== '') {
           this.isShowLoading = true;
           return new Promise(((resolve, reject) => {
-            LoginByUserName(this.username, this.password).then(response => {
-              response = response.data;
-              if (response.code === 201) {
-                // 登陆成功Toast
-                this.$Message.success("登陆成功，即将跳转到主页!");
-                console.log(response.data);
-                // 登陆成功，设置用户信息
+            LoginByUserNameAndPassWord(this.username, this.password).then(response => {
+              if (response.status === 201) {
+                document.onkeydown = undefined;
+                this.$Message.success("登录成功，即将跳转到主页!");
+                // 登录成功，设置用户信息
                 this.$store.commit('setUser', {
                   userId: response.data.userId,
                   userName: response.data.userName,
@@ -86,19 +87,19 @@
                 this.isShowLoading = false;
                 this.$router.replace('index')
               } else {
-                console.log(response.message);
-                // 登陆失败Toast
-                this.$Message.error(response.message);
+                this.$Message.error(response.data.error);
                 this.isShowLoading = false;
               }
             }).catch(error => {
+              this.$Message.error(error.response.data.error);
+              this.isShowLoading = false;
               reject(error);
             })
           }));
         } else {
           this.$Message.warning("请输入用户名和密码");
         }
-      }
+      },
     }
   }
 </script>
