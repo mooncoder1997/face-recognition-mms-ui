@@ -35,57 +35,25 @@
     methods: {
       normalLogin() {
         this.$router.replace({name: 'Login'});
-      },
-      login: function (response) {
-        this.$Message.success("登录成功，即将跳转到主页!");
-        // 登录成功，设置用户信息
-        this.$store.commit('setUser', {
-          userId: response.data.userId,
-          userName: response.data.userName,
-          userGender: response.data.userGender,
-          userEmail: response.data.userEmail,
-          userRoleName: response.data.userRoleName
-        });
-        this.$router.replace('index');
-      },
-      loginByFace(faceImageBase64) {
-        return new Promise(((resolve, reject) => {
-          console.log("faceImageBase64: " + faceImageBase64);
-          LoginByFace(faceImageBase64).then(response => {
-            if (response.status === 201) {
-              this.$Message.success("登录成功，即将跳转到主页!");
-              // 登录成功，设置用户信息
-              this.$store.commit('setUser', {
-                userId: response.data.userId,
-                userName: response.data.userName,
-                userGender: response.data.userGender,
-                userEmail: response.data.userEmail,
-                userRoleName: response.data.userRoleName
-              });
-              this.$router.replace('index');
-            } else {
-              this.$Message.error(response.data.error);
-            }
-          }).catch(error => {
-            this.$Message.error(error.response.data.error);
-            reject(error);
-          })
-        }));
       }
     },
     mounted: function () {
+      const message = this.$Message;
+      const store = this.$store;
+      const router = this.$router;
+      let mediaStreamTrack;
+
       let context = canvas.getContext('2d');
       let video = this.$refs.video;
       let videoObj = {"video": true};
 
-      navigator.mediaDevices.getUserMedia(videoObj)
-        .then(function (mediaStream) {
-          video.srcObject = mediaStream;
-          video.play();
-        })
-        .catch(function (error) {
+      navigator.mediaDevices.getUserMedia(videoObj).then(function (mediaStream) {
+        video.srcObject = mediaStream;
+        mediaStreamTrack = mediaStream;
+        video.play();
+      }).catch(function (error) {
           console.log(error);
-        });
+      });
 
       let is_stop = 0;
       video.ontimeupdate = function () {
@@ -120,45 +88,32 @@
         let faceImageBase64 = base64.substring(23);
         //显示遮罩层
         document.getElementById('modal').style.display = 'block';
+        loginByFace(faceImageBase64);
+      }
+
+      function loginByFace(faceImageBase64) {
         console.log(faceImageBase64);
         LoginByFace(faceImageBase64).then(response => {
-          if (response.status === 201) {
-            // this.$Message.success("登录成功，即将跳转到主页!");
-            // 登录成功，设置用户信息
-            this.$store.commit('setUser', {
-              userId: response.data.userId,
-              userName: response.data.userName,
-              userGender: response.data.userGender,
-              userEmail: response.data.userEmail,
-              userRoleName: response.data.userRoleName
-            });
-            this.$router.replace('index');
-          } else {
-            this.$Message.error(response.data.error);
-          }
+          login(response);
         });
-        // return new Promise(((resolve, reject) => {
-        //   console.log("faceImageBase64: " + faceImageBase64);
-        //   LoginByFace(faceImageBase64).then(response => {
-        //     if (response.status === 201) {
-        //       this.$Message.success("登录成功，即将跳转到主页!");
-        //       // 登录成功，设置用户信息
-        //       this.$store.commit('setUser', {
-        //         userId: response.data.userId,
-        //         userName: response.data.userName,
-        //         userGender: response.data.userGender,
-        //         userEmail: response.data.userEmail,
-        //         userRoleName: response.data.userRoleName
-        //       });
-        //       this.$router.replace('index');
-        //     } else {
-        //       this.$Message.error(response.data.error);
-        //     }
-        //   }).catch(error => {
-        //     this.$Message.error(error.response.data.error);
-        //     reject(error);
-        //   })
-        // }));
+      }
+
+      function login(response) {
+        if (response.status === 201) {
+          message.success("登录成功，即将跳转到主页!");
+          // 登录成功，设置用户信息
+          store.commit('setUser', {
+            userId: response.data.userId,
+            userName: response.data.userName,
+            userGender: response.data.userGender,
+            userEmail: response.data.userEmail,
+            userRoleName: response.data.userRoleName
+          });
+          mediaStreamTrack.getTracks()[0].stop(); //关闭摄像头
+          router.replace('index');
+        } else {
+          message.error(response.data.error);
+        }
       }
     },
   }

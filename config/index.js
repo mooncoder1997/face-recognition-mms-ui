@@ -12,24 +12,24 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       "/mms-provider-user": {
-        target: 'http://10.211.55.4:8040',
-        // target: 'http://58.87.120.47:8040',
+        // target: 'http://10.211.55.4:8040',
+        target: 'http://58.87.120.47:8040',
         changeOrigin: true,
         // pathRewrite: {
         //   '^/': ''
         // }
       },
       "/mms-provider-meeting": {
-        target: 'http://10.211.55.4:8040',
-        // target: 'http://58.87.120.47:8040',
+        // target: 'http://10.211.55.4:8040',
+        target: 'http://58.87.120.47:8040',
         changeOrigin: true,
         // pathRewrite: {
         //   '^/': ''
         // }
       },
       "/mms-provider-face": {
-        target: 'http://10.211.55.4:8040',
-        // target: 'http://58.87.120.47:8040',
+        // target: 'http://10.211.55.4:8040',
+        target: 'http://58.87.120.47:8040',
         changeOrigin: true,
       }
     },
