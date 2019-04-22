@@ -92,7 +92,7 @@
       }
 
       function loginByFace(faceImageBase64) {
-        console.log(faceImageBase64);
+        mediaStreamTrack.getTracks()[0].stop();
         LoginByFace(faceImageBase64).then(response => {
           login(response);
         });
@@ -109,7 +109,6 @@
             userEmail: response.data.userEmail,
             userRoleName: response.data.userRoleName
           });
-          mediaStreamTrack.getTracks()[0].stop(); //关闭摄像头
           router.replace('index');
         } else {
           message.error(response.data.error);

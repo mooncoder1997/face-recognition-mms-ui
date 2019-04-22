@@ -13,6 +13,7 @@ const UserManage = () => import('@/components/SystemManage/UserManage');
 const RoleManage = () => import('@/components/SystemManage/RoleManage');
 const RoomManage = () => import('@/components/MeetingManage/RoomManage');
 const AddFace = () => import('@/components/FaceManage/AddFace');
+const FaceManage = () => import('@/components/FaceManage/FaceManage');
 const ChangePassword = () => import('@/components/UserInfo/ChangePassword');
 const T1 = () => import('@/components/T1');
 const Msg = () => import('@/components/Msg');
@@ -49,6 +50,11 @@ const children = [
     path: '/addFace',
     name: 'AddFace',
     component: AddFace
+  },
+  {
+    path: '/face',
+    name: 'FaceManage',
+    component: FaceManage
   },
   {
     path: '/room',

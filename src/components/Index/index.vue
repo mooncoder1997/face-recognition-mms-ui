@@ -173,6 +173,12 @@
                 size: 20,
                 type: 'md-person-add',
                 text: '注册人脸信息'
+              },
+              {
+                name: 'FaceManage',
+                size: 20,
+                type: 'md-sad',
+                text: '已注册人脸'
               }
             ]
           },

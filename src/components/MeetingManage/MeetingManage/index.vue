@@ -1,8 +1,9 @@
 <template>
   <div>
     <div class="query-c">
-      查询指定会议：
-      <Input search @on-search="getRoomByRoomName" v-model="searchRoomName" placeholder="请输入" style="width: auto"/>
+      查询指定用户预定的会议：
+      <Input search @on-search="queryMeetingByUserId" v-model="searchMeetingByUserId" placeholder="请输入用户编号"
+             style="width: auto"/>
     </div>
     <br>
 
@@ -40,8 +41,8 @@
       </template>
 
       <template slot-scope="{ row, index }" slot="meetingDate">
-        <DatePicker type="date" placeholder="Select date"  v-model="editMeetingDate" v-if="editIndex === index"></DatePicker>
-<!--        <Input type="text" v-model="editMeetingDate" v-if="editIndex === index"/>-->
+        <DatePicker type="date" placeholder="Select date" v-model="editMeetingDate"
+                    v-if="editIndex === index"></DatePicker>
         <span v-else>{{ row.meetingDate }}</span>
       </template>
 
@@ -101,7 +102,7 @@
 </template>
 
 <script>
-  import {QueryAllMeetings, DeleteMeetingByMeetingId, UpdateMeeting, BookMeeting} from "../../../api/meeting";
+  import {QueryAllMeetings, DeleteMeetingByMeetingId, UpdateMeeting, QueryMeetingByUserId} from "../../../api/meeting";
   import {QueryAllRoom} from "../../../api/room";
 
   export default {
@@ -110,7 +111,7 @@
       return {
         loading: true,
         isAddMeeting: false,
-        searchRoomName: '',
+        searchMeetingByUserId: '',
         maxPeople: 10,
         columns: [
           {
@@ -222,17 +223,32 @@
           reject(error)
         })
       },
+      queryMeetingByUserId(searchMeetingByUserId) {
+        if (searchMeetingByUserId) {
+          QueryMeetingByUserId(searchMeetingByUserId).then(response => {
+            if (response.status === 200) {
+              this.$Message.success("查询会议成功！");
+              this.data = response.data;
+              this.loading = false;
+            } else {
+              this.$Message.error("查询会议失败！");
+            }
+          })
+        } else {
+          this.queryAllMeetings();
+        }
+      },
       updateMeeting(meetingId, meetingName, meetingTopic, meetingRoomName, meetingDate, meetingStartTime, meetingEndTime, meetingRemarks) {
         meetingDate = meetingDate.toLocaleDateString().replace(/\//g, "-");
         return new Promise(((resolve, reject) => {
           UpdateMeeting(meetingId, meetingName, meetingTopic, meetingRoomName, meetingDate, meetingStartTime, meetingEndTime, meetingRemarks)
             .then(response => {
-            if (response.status === 201) {
-              this.$Message.success("更新会议成功！");
-            } else {
-              this.$Message.error("更新会议失败！");
-            }
-          })
+              if (response.status === 201) {
+                this.$Message.success("更新会议成功！");
+              } else {
+                this.$Message.error("更新会议失败！");
+              }
+            })
         }))
       },
       deleteMeetingByMeetingId(meetingId) {
