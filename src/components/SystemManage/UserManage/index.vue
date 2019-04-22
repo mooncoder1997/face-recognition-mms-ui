@@ -237,13 +237,6 @@
             }
           },
           {
-            title: '人脸编号',
-            key: 'userFaceId',
-            minWidth: 120,
-            align: 'center',
-            tooltip: true
-          },
-          {
             title: '备注',
             key: 'userRemarks',
             slot: 'userRemarks',

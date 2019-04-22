@@ -124,7 +124,7 @@
             title: '会议发起人编号',
             key: 'meetingUserId',
             sortable: true,
-            minWidth: 120,
+            minWidth: 140,
             align: 'center',
           },
           {
