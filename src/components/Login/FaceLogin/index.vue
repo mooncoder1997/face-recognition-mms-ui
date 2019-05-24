@@ -93,9 +93,15 @@
 
       function loginByFace(faceImageBase64) {
         mediaStreamTrack.getTracks()[0].stop();
-        LoginByFace(faceImageBase64).then(response => {
-          login(response);
-        });
+        return new Promise(((resolve, reject) => {
+          LoginByFace(faceImageBase64).then(response => {
+            login(response);
+          }).catch(error => {
+            this.$Message.error(error.response.data.error);
+            this.isShowLoading = false;
+            reject(error);
+          });
+        }));
       }
 
       function login(response) {

@@ -59,12 +59,6 @@
           this.passwordError = ''
         }
       },
-      // register() {
-      //   this.$Message.warning("注册功能尚未开放");
-      // },
-      // forgetPwd() {
-      //   this.$Message.warning("忘记密码功能尚未开放");
-      // },
       faceLogin() {
         this.$router.replace({name: 'FaceLogin'});
       },

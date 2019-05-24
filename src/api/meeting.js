@@ -14,6 +14,13 @@ export function QueryMeetingByUserId(userId) {
   })
 }
 
+export function QueryMeetingForUser() {
+  return request({
+    url: '/mms-provider-meeting/api/v1/meetings/user',
+    method: 'get'
+  })
+}
+
 export function QueryAT(roomName, roomDate) {
   return request({
     url: '/mms-provider-meeting/api/v1/meetings/times',
@@ -57,8 +64,9 @@ export function UpdateMeeting(meetingId, meetingName, meetingTopic, meetingRoomN
   })
 }
 
-export function BookMeeting(meetingName, meetingTopic, meetingRoomName, meetingDate, meetingStartTime, meetingEndTime, meetingRemarks) {
+export function BookMeeting(meetingUserId,meetingName, meetingTopic, meetingRoomName, meetingDate, meetingStartTime, meetingEndTime, meetingRemarks) {
   const data = {
+    "meetingUserId": meetingUserId,
     'meetingName': meetingName,
     'meetingTopic': meetingTopic,
     'meetingRoomName': meetingRoomName,
@@ -71,5 +79,11 @@ export function BookMeeting(meetingName, meetingTopic, meetingRoomName, meetingD
     url: '/mms-provider-meeting/api/v1/meeting',
     method: 'post',
     data
+  })
+}
+
+export function QueryAllBookableTime(meetingRoomName, meetingRoomDate) {
+  return request({
+    url: `/mms-provider-meeting/api/v1/meetings/times?roomName=${meetingRoomName}&roomDate=${meetingRoomDate}`
   })
 }

@@ -9,15 +9,19 @@ const Index = () => import('@/components/Index');
 const Home = () => import('@/components/Home');
 const BookMeeting = () => import('@/components/MeetingManage/BookMeeting');
 const MeetingManage = () => import('@/components/MeetingManage/MeetingManage');
-const UserManage = () => import('@/components/SystemManage/UserManage');
-const RoleManage = () => import('@/components/SystemManage/RoleManage');
 const RoomManage = () => import('@/components/MeetingManage/RoomManage');
 const AddFace = () => import('@/components/FaceManage/AddFace');
 const FaceManage = () => import('@/components/FaceManage/FaceManage');
+const UserManage = () => import('@/components/SystemManage/UserManage');
+const RoleManage = () => import('@/components/SystemManage/RoleManage');
 const ChangePassword = () => import('@/components/UserInfo/ChangePassword');
 const T1 = () => import('@/components/T1');
 const Msg = () => import('@/components/Msg');
 const UserInfo = () => import('@/components/UserInfo');
+const EurekaMonitor = () => import('@/components/SystemMonitor/EurekaMonitor');
+const UserServiceMonitor = () => import('@/components/SystemMonitor/UserServiceMonitor');
+const FaceServiceMonitor = () => import('@/components/SystemMonitor/FaceServiceMonitor');
+const MeetingServiceMonitor = () => import('@/components/SystemMonitor/MeetingServiceMonitor');
 
 // 首页下的子组件
 const children = [
@@ -37,14 +41,9 @@ const children = [
     component: MeetingManage
   },
   {
-    path: '/user',
-    name: 'UserManage',
-    component: UserManage
-  },
-  {
-    path: '/role',
-    name: 'RoleManage',
-    component: RoleManage
+    path: '/room',
+    name: 'RoomManage',
+    component: RoomManage
   },
   {
     path: '/addFace',
@@ -57,9 +56,14 @@ const children = [
     component: FaceManage
   },
   {
-    path: '/room',
-    name: 'RoomManage',
-    component: RoomManage
+    path: '/user',
+    name: 'UserManage',
+    component: UserManage
+  },
+  {
+    path: '/role',
+    name: 'RoleManage',
+    component: RoleManage
   },
   {
     path: 't1',
@@ -80,6 +84,26 @@ const children = [
     path: 'userinfo',
     name: 'UserInfo',
     component: UserInfo
+  },
+  {
+    path: 'eurekaMonitor',
+    name: 'EurekaMonitor',
+    component: EurekaMonitor
+  },
+  {
+    path: 'userMonitor',
+    name: 'UserServiceMonitor',
+    component: UserServiceMonitor
+  },
+  {
+    path: 'faceMonitor',
+    name: 'FaceServiceMonitor',
+    component: FaceServiceMonitor
+  },
+  {
+    path: 'meetingMonitor',
+    name: 'MeetingServiceMonitor',
+    component: MeetingServiceMonitor
   }
 ];
 

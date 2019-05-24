@@ -266,7 +266,7 @@
         return new Promise((resolve, reject) => {
           QueryAllRoom().then(response => {
             if (response.status === 200) {
-              this.$Message.success("查询所有会议室成功！");
+              // this.$Message.success("查询所有会议室成功！");
               this.roomData = response.data;
               this.loading = false;
             } else {

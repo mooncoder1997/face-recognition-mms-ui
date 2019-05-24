@@ -225,7 +225,38 @@
                 text: '基本资料',
               }
             ]
-          }
+          },
+          {
+            size: 20,
+            type: 'md-speedometer',
+            text: '系统监控',
+            children: [
+              {
+                name: 'EurekaMonitor',
+                size: 20,
+                type: 'md-cloudy',
+                text: '注册中心监控'
+              },
+              {
+                name: 'UserServiceMonitor',
+                size: 20,
+                type: 'ios-ribbon',
+                text: '用户服务监控'
+              },
+              {
+                name: 'FaceServiceMonitor',
+                size: 20,
+                type: 'md-sad',
+                text: '人脸服务监控'
+              },
+              {
+                name: 'MeetingServiceMonitor',
+                size: 20,
+                type: 'logo-twitch',
+                text: '会议服务监控'
+              }
+            ]
+          },
         ],
         openMenus: [], // 要打开的菜单名字 name属性
         menuCache: [], // 缓存已经打开的菜单

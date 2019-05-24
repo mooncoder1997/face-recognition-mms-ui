@@ -66,11 +66,15 @@
 
       function registerFace(faceImageBase64) {
         mediaStreamTrack.getTracks()[0].stop();
-        RegisterFace(userId, faceImageBase64).then(response => {
-          register(response);
-        }).catch(error => {
-          message.error(error.response.data.error);
-        })
+        return new Promise(((resolve, reject) => {
+          RegisterFace(userId, faceImageBase64).then(response => {
+            register(response);
+          }).catch(error => {
+            if (error.response.status === 406) {
+              message.error("已经注册过人脸");
+            }
+          })
+        }));
       }
 
       function register(response) {
