@@ -13,8 +13,8 @@ module.exports = {
     proxyTable: {
       "/mms-provider-user": {
         // target: 'http://192.168.1.21:8040',
-        target: 'http://10.211.55.4:8040',
-        // target: 'http://58.87.120.47:8040',
+        // target: 'http://10.211.55.4:8040',
+        target: 'http://58.87.120.47:8040',
         changeOrigin: true,
         // pathRewrite: {
         //   '^/': ''
@@ -22,8 +22,8 @@ module.exports = {
       },
       "/mms-provider-meeting": {
         // target: 'http://192.168.1.21:8040',
-        target: 'http://10.211.55.4:8040',
-        // target: 'http://58.87.120.47:8040',
+        // target: 'http://10.211.55.4:8040',
+        target: 'http://58.87.120.47:8040',
         changeOrigin: true,
         // pathRewrite: {
         //   '^/': ''
@@ -31,14 +31,15 @@ module.exports = {
       },
       "/mms-provider-face": {
         // target: 'http://192.168.1.21:8040',
-        target: 'http://10.211.55.4:8040',
-        // target: 'http://58.87.120.47:8040',
+        // target: 'http://10.211.55.4:8040',
+        target: 'http://58.87.120.47:8040',
         changeOrigin: true,
       }
     },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
+    // host: '0.0.0.0', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -92,4 +93,4 @@ module.exports = {
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
   }
-}
+};
