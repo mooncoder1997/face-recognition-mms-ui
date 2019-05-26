@@ -2,28 +2,28 @@ import request from '../util/request'
 
 export function QueryMeetingByMeetingId(meetingId) {
   return request({
-    url: '/mms-provider-meeting/api/v1/meetings/' + meetingId,
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings/' + meetingId,
     method: 'get'
   })
 }
 
 export function QueryMeetingByUserId(userId) {
   return request({
-    url: '/mms-provider-meeting/api/v1/meetings/users/' + userId,
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings/users/' + userId,
     method: 'get'
   })
 }
 
 export function QueryMeetingForUser() {
   return request({
-    url: '/mms-provider-meeting/api/v1/meetings/user',
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings/user',
     method: 'get'
   })
 }
 
 export function QueryAT(roomName, roomDate) {
   return request({
-    url: '/mms-provider-meeting/api/v1/meetings/times',
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings/times',
     method: 'get',
     params: {
       'roomName': roomName,
@@ -34,14 +34,14 @@ export function QueryAT(roomName, roomDate) {
 
 export function QueryAllMeetings() {
   return request({
-    url: '/mms-provider-meeting/api/v1/meetings',
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings',
     method: 'get'
   })
 }
 
 export function DeleteMeetingByMeetingId(meetingId) {
   return request({
-    url: '/mms-provider-meeting/api/v1/meetings/' + meetingId,
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings/' + meetingId,
     method: 'delete'
   })
 }
@@ -58,7 +58,7 @@ export function UpdateMeeting(meetingId, meetingName, meetingTopic, meetingRoomN
     'meetingRemarks': meetingRemarks
   };
   return request({
-    url: '/mms-provider-meeting/api/v1/meeting',
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meeting',
     method: 'put',
     data
   })
@@ -77,7 +77,7 @@ export function BookMeeting(meetingUserId,meetingName, meetingTopic, meetingRoom
     'meetingRemarks': meetingRemarks
   };
   return request({
-    url: '/mms-provider-meeting/api/v1/meeting',
+    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/meeting',
     method: 'post',
     data
   })
@@ -85,6 +85,6 @@ export function BookMeeting(meetingUserId,meetingName, meetingTopic, meetingRoom
 
 export function QueryAllBookableTime(meetingRoomName, meetingRoomDate) {
   return request({
-    url: `/mms-provider-meeting/api/v1/meetings/times?roomName=${meetingRoomName}&roomDate=${meetingRoomDate}`
+    url: `http://58.87.120.47:8040/mms-provider-meeting/api/v1/meetings/times?roomName=${meetingRoomName}&roomDate=${meetingRoomDate}`
   })
 }

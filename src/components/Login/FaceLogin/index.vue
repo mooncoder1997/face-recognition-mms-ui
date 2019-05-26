@@ -4,9 +4,6 @@
       <video ref="video" id="video" width="400" height="320" autoplay></video>
       <canvas id="canvas" width="400" height="320"></canvas>
     </div>
-    <div>
-      <Button class="login-btn" type="primary" shape="circle" @click="normalLogin">账号密码登录</Button>
-    </div>
     <div id="modal">
       <Spin fix>
         <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
@@ -29,12 +26,16 @@
           backgroundPosition: 'center center',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
-        }
+        },
+        function: ''
       }
     },
+    created() {
+      this.getRouterData();
+    },
     methods: {
-      normalLogin() {
-        this.$router.replace({name: 'Login'});
+      getRouterData() {
+        this.function = this.$route.params.function;
       }
     },
     mounted: function () {
@@ -52,7 +53,7 @@
         mediaStreamTrack = mediaStream;
         video.play();
       }).catch(function (error) {
-          console.log(error);
+        console.log(error);
       });
 
       let is_stop = 0;
@@ -74,7 +75,6 @@
       function draw_face_box(faces, base64) {
         let rect;
         let i;
-        //context.clearRect(0, 0, canvas.width, canvas.height);
         for (i = 0; i < faces.length; i++) {
           rect = faces[i];
           context.strokeStyle = '#a64ceb';
@@ -90,7 +90,6 @@
         document.getElementById('modal').style.display = 'block';
         loginByFace(faceImageBase64);
       }
-
       function loginByFace(faceImageBase64) {
         mediaStreamTrack.getTracks()[0].stop();
         return new Promise(((resolve, reject) => {
@@ -103,10 +102,9 @@
           });
         }));
       }
-
       function login(response) {
         if (response.status === 201) {
-          message.success("登录成功，即将跳转到主页!");
+          message.success("登录成功，正在跳转...");
           // 登录成功，设置用户信息
           store.commit('setUser', {
             userId: response.data.userId,
@@ -115,7 +113,7 @@
             userEmail: response.data.userEmail,
             userRoleName: response.data.userRoleName
           });
-          router.replace('index');
+          router.replace(this.function);
         } else {
           message.error(response.data.error);
         }
@@ -163,13 +161,6 @@
     border-radius: 10px;
   }
 
-  .login-btn {
-    position: absolute;
-    left: 50%;
-    margin-left: -52px;
-    margin-top: 250px;
-  }
-
   #modal {
     position: absolute;
     width: 400px;
@@ -180,18 +171,9 @@
     display: none;
   }
 
-  .ivu-spin-fix {
-    opacity: 0.8;
-  }
-
   .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
   }
-
-  .ivu-icon {
-    font-size: 32px !important;
-  }
-
 </style>
 
 

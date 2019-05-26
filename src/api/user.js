@@ -2,14 +2,14 @@ import request from '../util/request'
 
 export function QueryUserByUserId(userId) {
   return request({
-    url: '/mms-provider-user/api/v1/users/' + userId,
+    url: 'http://58.87.120.47:8040/mms-provider-user/api/v1/users/' + userId,
     method: 'get'
   })
 }
 
 export function QueryAllUser() {
   return request({
-    url: '/mms-provider-user/api/v1/users',
+    url: 'http://58.87.120.47:8040/mms-provider-user/api/v1/users',
     method: 'get'
   })
 }
@@ -25,7 +25,7 @@ export function UpdateUser(userId, userName, userGender, userEmail, userMobile, 
     'userRemarks': userRemarks
   };
   return request({
-    url: '/mms-provider-user/api/v1/user',
+    url: 'http://58.87.120.47:8040/mms-provider-user/api/v1/user',
     method: 'put',
     data
   })
@@ -37,7 +37,7 @@ export function UpdatePassword(userId, userPassword) {
     'userPassword': userPassword
   };
   return request({
-    url: '/mms-provider-user/api/v1/user',
+    url: 'http://58.87.120.47:8040/mms-provider-user/api/v1/user',
     method: 'put',
     data
   })
@@ -45,7 +45,7 @@ export function UpdatePassword(userId, userPassword) {
 
 export function DeleteUserByUserId(userId) {
   return request({
-    url: '/mms-provider-user/api/v1/user/' + userId,
+    url: 'http://58.87.120.47:8040/mms-provider-user/api/v1/user/' + userId,
     method: 'delete'
   })
 }
@@ -62,7 +62,7 @@ export function AddUser(userId, userPassword, userName, userGender, userEmail, u
     'userRemarks': userRemarks
   };
   return request({
-    url: '/mms-provider-user/api/v1/user',
+    url: 'http://58.87.120.47:8040/mms-provider-user/api/v1/user',
     method: 'post',
     data
   })

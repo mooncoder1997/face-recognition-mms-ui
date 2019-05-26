@@ -3,11 +3,13 @@ import Router from 'vue-router'
 
 Vue.use(Router);
 
-const Login = () => import('@/components/Login/NormalLogin');
+// Raspberry
+const Dashboard = () => import('@/components/Dashboard');
 const FaceLogin = () => import('@/components/Login/FaceLogin');
+const BookMeeting = () => import('@/components/Book');
+
 const Index = () => import('@/components/Index');
 const Home = () => import('@/components/Home');
-const BookMeeting = () => import('@/components/MeetingManage/BookMeeting');
 const MeetingManage = () => import('@/components/MeetingManage/MeetingManage');
 const RoomManage = () => import('@/components/MeetingManage/RoomManage');
 const AddFace = () => import('@/components/FaceManage/AddFace');
@@ -93,21 +95,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/dashboard'
     },
-
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
-
     {
       path: '/faceLogin',
       name: 'FaceLogin',
       component: FaceLogin
     },
-
+    {
+      path: 'book',
+      name: 'BookMeeting',
+      component: BookMeeting
+    },
     {
       path: '/index',
       component: Index,

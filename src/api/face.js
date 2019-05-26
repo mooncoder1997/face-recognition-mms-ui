@@ -6,7 +6,7 @@ export function RegisterFace(faceUserId, faceFeature) {
     'faceFeature': faceFeature
   };
   return request({
-    url: '/mms-provider-face/api/v1/face',
+    url: 'http://58.87.120.47:8040/mms-provider-face/api/v1/face',
     method: 'post',
     data
   })
@@ -14,14 +14,14 @@ export function RegisterFace(faceUserId, faceFeature) {
 
 export function QueryAllFaces() {
   return request({
-    url: '/mms-provider-face/api/v1/faces',
+    url: 'http://58.87.120.47:8040/mms-provider-face/api/v1/faces',
     method: 'get'
   })
 }
 
 export function DeleteFaceByFaceId(faceId) {
   return request({
-    url: '/mms-provider-face/api/v1/faces/' + faceId,
+    url: 'http://58.87.120.47:8040/mms-provider-face/api/v1/faces/' + faceId,
     method: 'delete'
   })
 }
