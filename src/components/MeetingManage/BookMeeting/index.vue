@@ -79,6 +79,7 @@
           </Col>
         </Row>
       </div>
+
       <div v-else-if="current == 2">
         <Select
           v-model="model1"
@@ -165,13 +166,14 @@
         steps: [1, 10],
         meetingStartTime: '',
         meetingEndTime: '',
-        model1: '',
+        model1: [],
         options: [],
         list: [],
         meetingName: '',
         meetingTopic: '',
         meetingRemarks: '',
-        prompt: false
+        prompt: false,
+        people: []
       }
     },
     components: {
@@ -284,7 +286,7 @@
       bookMeeting() {
         console.log(this.meetingTopic);
         return new Promise((resolve, reject) => {
-          BookMeeting(this.userId, this.meetingName, this.meetingTopic, this.meetingRoomName, this.meetingDate, this.meetingStartTime, this.meetingEndTime, this.meetingRemarks)
+          BookMeeting(this.userId, this.meetingName, this.meetingTopic, this.meetingRoomName, this.meetingDate, this.meetingStartTime, this.meetingEndTime, this.model1, this.meetingRemarks)
             .then(response => {
               this.prompt = true;
 

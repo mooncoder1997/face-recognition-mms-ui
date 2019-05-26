@@ -94,10 +94,15 @@
       </template>
     </Table>
     <br>
-    <Button type="primary" @click="exportData">
-      <Icon type="ios-download-outline"></Icon>
-      导出数据
-    </Button>
+    <div style="overflow: hidden">
+      <Button type="primary" @click="exportData">
+        <Icon type="ios-download-outline"></Icon>
+        导出数据
+      </Button>
+      <div style="float: right;">
+        <Page :total="100" :current="1" @on-change="changePage"></Page>
+      </div>
+    </div>
   </div>
 </template>
 

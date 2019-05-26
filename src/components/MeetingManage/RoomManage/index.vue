@@ -61,10 +61,15 @@
       </template>
     </Table>
     <br>
-    <Button type="primary" @click="exportData">
-      <Icon type="ios-download-outline"></Icon>
-      导出数据
-    </Button>
+    <div style="overflow: hidden">
+      <Button type="primary" @click="exportData">
+        <Icon type="ios-download-outline"></Icon>
+        导出数据
+      </Button>
+      <div style="float: right;">
+        <Page :total="100" :current="1" @on-change="changePage"></Page>
+      </div>
+    </div>
 
     <Modal v-model="isAddRoom" title="添加新的会议室" @on-ok="addRoom" @on-cancel="cancel">
       <Form ref="addRoomForm" :model="formValidate" :rules="ruleValidate" :label-width="90">
@@ -103,7 +108,6 @@
         columns: [
           {
             title: '会议室名称',
-            slot: 'roomName',
             key: 'roomName',
             minWidth: 120,
             align: 'center'

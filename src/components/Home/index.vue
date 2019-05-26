@@ -7,7 +7,7 @@
           <h2>
             <b>{{todayMeetings.length}}</b>
           </h2>
-          <h5 className="text-muted">指定日期会议</h5>
+          <h5 className="text-muted">今日会议</h5>
         </Card>
       </Col>
       <Col span="6">
@@ -25,7 +25,7 @@
           <h2>
             <b>{{totalMeetings.length}}</b>
           </h2>
-          <h5 className="text-muted">会议</h5>
+          <h5 className="text-muted">全部会议</h5>
         </Card>
       </Col>
       <Col span="6">
@@ -34,20 +34,18 @@
           <h2>
             <b>{{totalMeetingRooms.length}}</b>
           </h2>
-          <h5 className="text-muted">会议室</h5>
+          <h5 className="text-muted">会议室总数</h5>
         </Card>
       </Col>
     </Row>
     <Row :gutter="26">
-      <Col span="4">
-        <div style="color: transparent;">blank</div>
-      </Col>
       <Col span="8">
-        <Card style="margin-top: 20px">
-          <div v-if="todayMeetings.length !== 0" style="margin-left: 40px">
-            <TimelineItem v-for="(meeting, meetingId) in todayMeetings" :key="meetingId" color="green">
-              <p class="time">{{meeting.meetingDate}}<br/>{{meeting.meetingStartTime}}--{{meeting.meetingEndTime}}</p>
-              <p class="content">{{meeting.meetingTopic}} | {{meeting.meetingRemarks}}</p>
+        <Card style="margin-top: 20px; height: 333px">
+          <div v-if="meetings.length !== 0" style="margin-top: 20px;margin-left: 40px">
+            <TimelineItem v-for="(meeting, meetingId) in meetings" :key="meetingId" color="green">
+              <p class="time">{{meeting.meetingDate}}&nbsp;&nbsp;{{meeting.meetingStartTime}}--{{meeting.meetingEndTime}}</p>
+              <p class="content">会议主题：{{meeting.meetingTopic}}</p>
+              <p class="content">会议室：{{meeting.meetingRoomName}}</p>
             </TimelineItem>
           </div>
           <div v-else style="margin: 123px 20px">
@@ -57,25 +55,24 @@
           </div>
         </Card>
       </Col>
-      <Col span="8">
-        <Card style="margin-top: 20px">
+      <Col span="6">
+        <Card style="margin-top: 20px;height: 333px">
           <Calendar v-on:choseDay="clickDay">
           </Calendar>
         </Card>
       </Col>
+      <Col span="10">
+        <Card style="margin-top: 20px">
+          <div id="room" :style="{width: '100%', height: '300px'}"></div>
+        </Card>
+      </Col>
     </Row>
     <Row :gutter="26">
-      <Col span="12">
-        <Card>
-          <div id="meetingRoom" :style="{width: '400px', height: '400px', marginLeft: '80px'}"></div>
+      <Col span="26">
+        <Card style="margin-top: 20px">
+          <div id="meetingRoom" :style="{width: '100%', height: '400px'}"></div>
         </Card>
       </Col>
-      <Col span="12">
-        <Card>
-          <div id="room" :style="{width: '400px', height: '400px', marginLeft: '80px'}"></div>
-        </Card>
-      </Col>
-
     </Row>
   </div>
 </template>
@@ -122,15 +119,15 @@
               if (item.meetingDate.replace(/\b(0+)/gi, '') === this.data) {
                 todayMeeting.push(item);
               }
-            })
+            });
             this.todayMeetings = todayMeeting;
           })
         })
       },
 
       clickDay(data) {
-        console.log(data)//2019/5/11
-        this.data = data.replace(/\//g, '-')
+        console.log(data);
+        this.data = data.replace(/\//g, '-');
         this.queryMeetingForUser();
       },
 
@@ -230,11 +227,14 @@
   .time {
     font-size: 17px;
     font-weight: bold;
+    color: purple;
   }
 
   .content {
     font-size: 14px;
     padding-left: 5px;
+    color: dimgrey;
+    font-weight: bold;
   }
 
   .meeting {

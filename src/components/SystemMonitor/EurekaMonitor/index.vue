@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe id="eureka-iframe" src="http://10.211.55.4:8761" frameborder="0" scrolling="no"></iframe>
+    <iframe id="eureka-iframe" src="http://58.87.120.47:8761" frameborder="0" scrolling="no"></iframe>
   </div>
 </template>
 

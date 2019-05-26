@@ -64,7 +64,7 @@ export function UpdateMeeting(meetingId, meetingName, meetingTopic, meetingRoomN
   })
 }
 
-export function BookMeeting(meetingUserId,meetingName, meetingTopic, meetingRoomName, meetingDate, meetingStartTime, meetingEndTime, meetingRemarks) {
+export function BookMeeting(meetingUserId,meetingName, meetingTopic, meetingRoomName, meetingDate, meetingStartTime, meetingEndTime, meetingPeople, meetingRemarks) {
   const data = {
     "meetingUserId": meetingUserId,
     'meetingName': meetingName,
@@ -73,6 +73,7 @@ export function BookMeeting(meetingUserId,meetingName, meetingTopic, meetingRoom
     'meetingDate': meetingDate,
     'meetingStartTime': meetingStartTime,
     'meetingEndTime': meetingEndTime,
+    'meetingPeople': meetingPeople,
     'meetingRemarks': meetingRemarks
   };
   return request({

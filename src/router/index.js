@@ -15,9 +15,6 @@ const FaceManage = () => import('@/components/FaceManage/FaceManage');
 const UserManage = () => import('@/components/SystemManage/UserManage');
 const RoleManage = () => import('@/components/SystemManage/RoleManage');
 const ChangePassword = () => import('@/components/UserInfo/ChangePassword');
-const T1 = () => import('@/components/T1');
-const Msg = () => import('@/components/Msg');
-const UserInfo = () => import('@/components/UserInfo');
 const EurekaMonitor = () => import('@/components/SystemMonitor/EurekaMonitor');
 const UserServiceMonitor = () => import('@/components/SystemMonitor/UserServiceMonitor');
 const FaceServiceMonitor = () => import('@/components/SystemMonitor/FaceServiceMonitor');
@@ -66,24 +63,9 @@ const children = [
     component: RoleManage
   },
   {
-    path: 't1',
-    name: 'T1',
-    component: T1
-  },
-  {
     path: 'password',
     name: 'ChangePassword',
     component: ChangePassword
-  },
-  {
-    path: 'msg',
-    name: 'Msg',
-    component: Msg
-  },
-  {
-    path: 'userinfo',
-    name: 'UserInfo',
-    component: UserInfo
   },
   {
     path: 'eurekaMonitor',

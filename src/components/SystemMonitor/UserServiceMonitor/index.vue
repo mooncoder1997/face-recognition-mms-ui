@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe id="user-iframe" src="http://10.211.55.4:8001/druid" frameborder="0" scrolling="no"></iframe>
+    <iframe id="user-iframe" src="http://58.87.120.47:8001/druid" frameborder="0" scrolling="no"></iframe>
   </div>
 </template>
 

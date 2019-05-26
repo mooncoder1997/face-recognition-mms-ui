@@ -212,18 +212,6 @@
                 name: 'ChangePassword',
                 text: '修改密码'
               },
-              {
-                size: 20,
-                type: 'ios-notifications-outline',
-                name: 'Msg',
-                text: '查看消息'
-              },
-              {
-                size: 20,
-                type: 'md-person',
-                name: 'UserInfo',
-                text: '基本资料',
-              }
             ]
           },
           {

@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "build": "node build/build.js",
     "electron_dev": "npm run build && electron build/electron.js",
-    "electron_build": "electron-packager ./dist/ --arch=x64 --overwrite"
+    "electron_build": "electron-packager ./dist/ --platform=linux --arch=armv7l --overwrite"
   },
   "dependencies": {
     "axios": "^0.18.0",
