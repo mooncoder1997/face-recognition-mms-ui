@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div style="margin-top: 30px; color: purple; font-size: larger">
+    <div style="margin-top: 5px; color: purple; font-size: larger">
       <center><h1>基于人脸识别的智能会议室管理系统</h1></center>
     </div>
-    <Row type="flex" justify="center" class="code-row-bg" style="margin-top: 30px">
+    <Row type="flex" justify="center" class="code-row-bg" style="margin-top: 5px">
       <Col>
         <div @click="this.bookMeeting">
           <Card style="width:320px">
@@ -14,7 +14,7 @@
           </Card>
         </div>
       </Col>
-      <Col style="margin-left: 100px">
+      <Col style="margin-left: 50px">
         <div @click="this.editMeeting">
           <Card style="width:320px">
             <div style="text-align:center">
@@ -25,7 +25,7 @@
         </div>
       </Col>
     </Row>
-    <Row type="flex" justify="center" class="code-row-bg" style="margin-top: 80px">
+    <Row type="flex" justify="center" class="code-row-bg" style="margin-top: 10px">
       <Col>
         <div @click="this.deleteMeeting">
           <Card style="width:320px">
@@ -36,7 +36,7 @@
           </Card>
         </div>
       </Col>
-      <Col style="margin-left: 100px">
+      <Col style="margin-left: 50px">
         <div @click="this.watchMeeting">
           <Card style="width:320px">
             <div style="text-align:center">
@@ -47,52 +47,81 @@
         </div>
       </Col>
     </Row>
+    <div style="margin-top: 5px; color: purple; font-size: larger">
+      <center><h2>当前会议室为: {{meetingRoomData.roomName}}, 最大容纳人数: {{meetingRoomData.roomPeople}}</h2></center>
+    </div>
   </div>
 </template>
 
 <script>
+  import {QueryRoomByRoomName} from "../../api/room";
+
   export default {
     name: "Dashboard",
     data() {
       return {
         modal: false,
+        meetingRoomData: []
       }
+    },
+    mounted() {
+      this.queryRoomByRoomName();
     },
     methods: {
       bookMeeting() {
         this.$router.replace({
           name: 'FaceLogin',
           params: {
-            function: 'book'
+            url: 'book'
           }
         });
+        // this.$router.replace({
+        //   name: 'BookMeeting'
+        // });
       },
 
       editMeeting() {
         this.$router.replace({
           name: 'FaceLogin',
           params: {
-            function: 'edit'
+            url: 'edit'
           }
         });
+        // this.$router.replace({
+        //   name: 'EditMeeting'
+        // });
       },
 
       deleteMeeting() {
         this.$router.replace({
           name: 'FaceLogin',
           params: {
-            function: 'delete'
+            url: 'delete'
           }
         });
+        // this.$router.replace({
+        //   name: 'DeleteMeeting'
+        // });
       },
 
       watchMeeting() {
         this.$router.replace({
-          name: 'FaceLogin',
-          params: {
-            function: 'watch'
-          }
+          name: 'WatchMeeting'
         });
+      },
+
+      queryRoomByRoomName() {
+        return new Promise((resolve, reject) => {
+          QueryRoomByRoomName('MeetingRoom1').then(response => {
+            if (response.status == 200) {
+              this.meetingRoomData = response.data;
+            } else {
+              this.$Message.error("查询会议室失败！");
+            }
+          }).catch(error => {
+            this.$Message.error("网络异常！");
+          })
+        })
       }
     }
   }

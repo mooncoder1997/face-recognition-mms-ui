@@ -2,49 +2,7 @@ import request from '../util/request'
 
 export function QueryRoomByRoomName(roomName) {
   return request({
-    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/rooms/' + roomName,
+    url: 'http://192.168.1.105:8040/mms-provider-meeting/api/v1/rooms/' + roomName,
     method: 'get'
-  })
-}
-
-export function QueryAllRoom() {
-  return request({
-    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/rooms',
-    method: 'get'
-  })
-}
-
-export function DeleteRoomByRoomName(roomName) {
-  return request({
-    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/rooms/' + roomName,
-    method: 'delete'
-  })
-}
-
-export function UpdateRoom(roomName, roomLocation, roomPeople, roomRemarks) {
-  const data = {
-    'roomName': roomName,
-    'roomLocation': roomLocation,
-    'roomPeople': roomPeople,
-    'roomRemarks': roomRemarks
-  };
-  return request({
-    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/room',
-    method: 'put',
-    data
-  })
-}
-
-export function AddRoom(roomName, roomLocation, roomPeople, roomRemarks) {
-  const data = {
-    'roomName': roomName,
-    'roomLocation': roomLocation,
-    'roomPeople': roomPeople,
-    'roomRemarks': roomRemarks
-  };
-  return request({
-    url: 'http://58.87.120.47:8040/mms-provider-meeting/api/v1/room',
-    method: 'post',
-    data
   })
 }

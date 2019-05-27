@@ -7,89 +7,9 @@ Vue.use(Router);
 const Dashboard = () => import('@/components/Dashboard');
 const FaceLogin = () => import('@/components/Login/FaceLogin');
 const BookMeeting = () => import('@/components/Book');
-
-const Index = () => import('@/components/Index');
-const Home = () => import('@/components/Home');
-const MeetingManage = () => import('@/components/MeetingManage/MeetingManage');
-const RoomManage = () => import('@/components/MeetingManage/RoomManage');
-const AddFace = () => import('@/components/FaceManage/AddFace');
-const FaceManage = () => import('@/components/FaceManage/FaceManage');
-const UserManage = () => import('@/components/SystemManage/UserManage');
-const RoleManage = () => import('@/components/SystemManage/RoleManage');
-const ChangePassword = () => import('@/components/UserInfo/ChangePassword');
-const EurekaMonitor = () => import('@/components/SystemMonitor/EurekaMonitor');
-const UserServiceMonitor = () => import('@/components/SystemMonitor/UserServiceMonitor');
-const FaceServiceMonitor = () => import('@/components/SystemMonitor/FaceServiceMonitor');
-const MeetingServiceMonitor = () => import('@/components/SystemMonitor/MeetingServiceMonitor');
-
-// 首页下的子组件
-const children = [
-  {
-    path: '',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/meeting/book',
-    name: 'BookMeeting',
-    component: BookMeeting
-  },
-  {
-    path: '/meeting',
-    name: 'MeetingManage',
-    component: MeetingManage
-  },
-  {
-    path: '/room',
-    name: 'RoomManage',
-    component: RoomManage
-  },
-  {
-    path: '/addFace',
-    name: 'AddFace',
-    component: AddFace
-  },
-  {
-    path: '/face',
-    name: 'FaceManage',
-    component: FaceManage
-  },
-  {
-    path: '/user',
-    name: 'UserManage',
-    component: UserManage
-  },
-  {
-    path: '/role',
-    name: 'RoleManage',
-    component: RoleManage
-  },
-  {
-    path: 'password',
-    name: 'ChangePassword',
-    component: ChangePassword
-  },
-  {
-    path: 'eurekaMonitor',
-    name: 'EurekaMonitor',
-    component: EurekaMonitor
-  },
-  {
-    path: 'userMonitor',
-    name: 'UserServiceMonitor',
-    component: UserServiceMonitor
-  },
-  {
-    path: 'faceMonitor',
-    name: 'FaceServiceMonitor',
-    component: FaceServiceMonitor
-  },
-  {
-    path: 'meetingMonitor',
-    name: 'MeetingServiceMonitor',
-    component: MeetingServiceMonitor
-  }
-];
+const EditMeeting = () => import('@/components/Edit');
+const DeleteMeeting = () => import('@/components/Delete');
+const WatchMeeting = () => import('@/components/Watch');
 
 export default new Router({
   routes: [
@@ -108,14 +28,24 @@ export default new Router({
       component: FaceLogin
     },
     {
-      path: 'book',
+      path: '/book',
       name: 'BookMeeting',
       component: BookMeeting
     },
     {
-      path: '/index',
-      component: Index,
-      children,
+      path: '/edit',
+      name: 'EditMeeting',
+      component: EditMeeting,
+    },
+    {
+      path: '/delete',
+      name: 'DeleteMeeting',
+      component: DeleteMeeting,
+    },
+    {
+      path: '/watch',
+      name: 'WatchMeeting',
+      component: WatchMeeting,
     }
   ]
 })

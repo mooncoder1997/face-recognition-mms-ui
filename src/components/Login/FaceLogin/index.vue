@@ -4,6 +4,9 @@
       <video ref="video" id="video" width="400" height="320" autoplay></video>
       <canvas id="canvas" width="400" height="320"></canvas>
     </div>
+    <div>
+      <Button class="login-btn" type="success" @click="this.returnToDashBoard">账号密码登录</Button>
+    </div>
     <div id="modal">
       <Spin fix>
         <Icon type="ios-loading" size=18 class="demo-spin-icon-load"></Icon>
@@ -14,6 +17,7 @@
 </template>
 
 <script>
+  let mediaStreamTrack;
   require('jquery.facedetection');
   import {LoginByFace} from "../../../api/login";
 
@@ -27,22 +31,31 @@
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         },
-        function: ''
+        url: '',
       }
     },
     created() {
       this.getRouterData();
+      console.log(this.url);
     },
     methods: {
       getRouterData() {
-        this.function = this.$route.params.function;
+        this.url = this.$route.params.url;
+      },
+
+      returnToDashBoard() {
+        this.$router.replace({
+          name: 'Dashboard'
+        });
+        mediaStreamTrack.getTracks()[0].stop();
       }
     },
     mounted: function () {
       const message = this.$Message;
       const store = this.$store;
       const router = this.$router;
-      let mediaStreamTrack;
+      const url = this.url;
+
 
       let context = canvas.getContext('2d');
       let video = this.$refs.video;
@@ -86,7 +99,6 @@
           context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
         }
         let faceImageBase64 = base64.substring(23);
-        //显示遮罩层
         document.getElementById('modal').style.display = 'block';
         loginByFace(faceImageBase64);
       }
@@ -96,13 +108,23 @@
           LoginByFace(faceImageBase64).then(response => {
             login(response);
           }).catch(error => {
-            this.$Message.error(error.response.data.error);
-            this.isShowLoading = false;
+            message.error("人脸识别异常");
             reject(error);
+            mediaStreamTrack.getTracks()[0].stop();
+            router.replace({
+              name: 'Dashboard'
+            });
           });
         }));
       }
       function login(response) {
+        if (url === undefined) {
+          message.error('系统异常');
+          mediaStreamTrack.getTracks()[0].stop();
+          router.replace({
+            name: 'Dashboard'
+          });
+        }
         if (response.status === 201) {
           message.success("登录成功，正在跳转...");
           // 登录成功，设置用户信息
@@ -113,9 +135,13 @@
             userEmail: response.data.userEmail,
             userRoleName: response.data.userRoleName
           });
-          router.replace(this.function);
+          router.replace(url);
         } else {
           message.error(response.data.error);
+          mediaStreamTrack.getTracks()[0].stop();
+          router.replace({
+            name: 'Dashboard'
+          });
         }
       }
     },
@@ -130,18 +156,16 @@
     align-items: center;
     color: #fff;
   }
-
   #face-container {
     position: absolute;
     width: 500px;
     height: 400px;
-    top: 50%;
+    top: 20%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
     background-color: rgba(255, 255, 255, .5);
     border-radius: 10px;
   }
-
   #video {
     position: absolute;
     top: 50%;
@@ -149,9 +173,7 @@
     margin: -160px 0 0 -200px;
     object-fit: contain;
     border-radius: 10px;
-
   }
-
   #canvas {
     position: absolute;
     top: 50%;
@@ -160,7 +182,12 @@
     object-fit: fill;
     border-radius: 10px;
   }
-
+  .login-btn {
+    position: absolute;
+    left: 50%;
+    margin-left: -52px;
+    margin-top: 190px;
+  }
   #modal {
     position: absolute;
     width: 400px;
@@ -170,9 +197,14 @@
     margin: -160px 0 0 -200px;
     display: none;
   }
-
+  .ivu-spin-fix {
+    opacity: 0.8;
+  }
   .demo-spin-icon-load {
     animation: ani-demo-spin 1s linear infinite;
+  }
+  .ivu-icon {
+    font-size: 32px !important;
   }
 </style>
 
