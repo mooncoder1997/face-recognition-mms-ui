@@ -61,9 +61,7 @@
           if (valid) {
             return new Promise(((resolve, reject) => {
               UpdatePassword(this.userId, this.formCustom.passwd).then(response => {
-                console.log(this.userId);
-                response = response.data;
-                if (response.code === 201) {
+                if (response.status === 201) {
                   this.$Message.success("修改密码成功，请重新登录！");
                   this.$store.commit('setUser', {
                     userId: '',
@@ -74,7 +72,7 @@
                   });
                   this.$router.replace({name: 'Login'});
                 } else {
-                  this.$Message.error(response.message);
+                  this.$Message.error(response.data);
                 }
               })
             }));
