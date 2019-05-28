@@ -192,7 +192,7 @@
     position: absolute;
     width: 400px;
     height: 320px;
-    top: 50%;
+    top: 44%;
     left: 50%;
     margin: -160px 0 0 -200px;
     display: none;
