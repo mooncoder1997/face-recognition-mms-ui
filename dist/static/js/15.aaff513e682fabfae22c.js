@@ -1,2 +1,0 @@
-webpackJsonp([15],{H0cq:function(t,e){},StSv:function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var c={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var t=this.$createElement,e=this._self._c||t;return e("div",[this._v("\n    首页\n    "),e("input",{attrs:{type:"text"}})])}]};var r=n("VU/8")({name:"Home"},c,!1,function(t){n("H0cq")},"data-v-2c988afc",null);e.default=r.exports}});
-//# sourceMappingURL=15.aaff513e682fabfae22c.js.map
