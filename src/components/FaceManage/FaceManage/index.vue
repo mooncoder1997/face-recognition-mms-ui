@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="query-c">
-      查询人脸：
-      <Input search @on-search="queryFaceByUserId" v-model="searchMeetingByUserId" placeholder="请输入用户编号"
-             style="width: auto"/>
-    </div>
-    <br>
+<!--    <div class="query-c">-->
+<!--      查询人脸：-->
+<!--      <Input search @on-search="queryFaceByUserId" v-model="searchMeetingByUserId" placeholder="请输入用户编号"-->
+<!--             style="width: auto"/>-->
+<!--    </div>-->
+<!--    <br>-->
 
     <Table border stripe :columns="columns" :data="data" :loading="loading" ref="faceTable">
       <template slot-scope="{ row, index }" slot="faceId">
