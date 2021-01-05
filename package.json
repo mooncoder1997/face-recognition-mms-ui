@@ -12,7 +12,7 @@
     "electron_build": "electron-packager ./dist/ --platform=linux --arch=armv7l --overwrite"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "echarts": "^4.2.1",
     "face-api.js": "^0.16.1",
     "iview": "^3.1.5",
